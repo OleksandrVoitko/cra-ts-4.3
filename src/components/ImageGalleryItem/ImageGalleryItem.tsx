@@ -1,9 +1,20 @@
-import { ImgGalleryItem, LiGalleryItem } from './ImageGalleryItem.styled';
+import { FC } from "react";
+import { ImgGalleryItem, LiGalleryItem } from "./ImageGalleryItem.styled";
 
-export function ImageGalleryItem({ src, modalImage, onImageClick }) {
+interface ImageGalleryItemProps {
+  src: string;
+  modalImage: string;
+  onImageClick: (image: string) => void;
+}
+
+export const ImageGalleryItem: FC<ImageGalleryItemProps> = ({
+  src,
+  modalImage,
+  onImageClick,
+}) => {
   return (
     <LiGalleryItem onClick={() => onImageClick(modalImage)}>
       <ImgGalleryItem src={src} />
     </LiGalleryItem>
   );
-}
+};

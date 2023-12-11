@@ -1,10 +1,15 @@
-import { Component, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { DivModal, DivOverlay } from "./Modal.styled";
 import { createPortal } from "react-dom";
 
+interface ModalProps {
+  onClose: () => void;
+  largeImg: string;
+}
+
 const modalRoot = document.querySelector("#modal-root");
 
-export const Modal = ({ onClose, largeImg }) => {
+export const Modal: FC<ModalProps> = ({ onClose, largeImg }) => {
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
@@ -12,14 +17,14 @@ export const Modal = ({ onClose, largeImg }) => {
     };
   }, []);
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.code === "Escape") {
       console.log("Escape");
       onClose();
     }
   };
 
-  const handleClickBackdrop = (event) => {
+  const handleClickBackdrop = (event: MouseEvent) => {
     if (event.currentTarget === event.target) {
       onClose();
     }

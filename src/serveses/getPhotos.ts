@@ -1,6 +1,6 @@
 import { BASE_URL, API_KEY, IMG_PER_PAGE } from "./apiConst";
 
-export async function getPhotos(searchQuery, page) {
+export async function getPhotos(searchQuery: string, page: number) {
   try {
     const response = await fetch(
       `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&page=${page}&per_page=${IMG_PER_PAGE}&image_type=photo&orientation=horizontal`

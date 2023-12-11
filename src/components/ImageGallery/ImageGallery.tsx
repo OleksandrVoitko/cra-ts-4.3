@@ -1,7 +1,17 @@
+import { FC } from "react";
+import { Image } from "../App";
 import { ImageGalleryItem } from "../ImageGalleryItem/ImageGalleryItem";
 import { UlImageGallery } from "./ImageGallery.styled";
 
-export function ImageGallery({ images, onImageClick }) {
+interface ImageGalleryProps {
+  images: Image[];
+  onImageClick: (image: string) => void;
+}
+
+export const ImageGallery: FC<ImageGalleryProps> = ({
+  images,
+  onImageClick,
+}) => {
   return (
     <UlImageGallery>
       {images.map(({ id, webformatURL, largeImageURL }) => (
@@ -14,4 +24,4 @@ export function ImageGallery({ images, onImageClick }) {
       ))}
     </UlImageGallery>
   );
-}
+};

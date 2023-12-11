@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import {
   ButtonSearchForm,
   FormSearchForm,
@@ -7,14 +7,18 @@ import {
 } from "./Searchbar.styled";
 import { ImSearch } from "react-icons/im";
 
-export const Searchbar = ({ handleSearch }) => {
+interface SearchbarProps {
+  handleSearch: (newSearchQuery: string) => void;
+}
+
+export const Searchbar: FC<SearchbarProps> = ({ handleSearch }) => {
   const [value, setValue] = useState("");
 
-  const handleChange = ({ target: { value } }) => {
-    setValue(value);
+  const handleChange = ({ target }: ChangeEvent) => {
+    setValue((target as HTMLInputElement).value);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     handleSearch(value);

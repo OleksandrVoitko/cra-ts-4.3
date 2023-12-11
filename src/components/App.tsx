@@ -9,20 +9,26 @@ import { Loader } from "./Loader/Loader";
 import { Modal } from "./Modal/Modal";
 import { Searchbar } from "./Searchbar/Searchbar";
 
+export interface Image {
+  id: string;
+  webformatURL: string;
+  largeImageURL: string;
+}
+
 export const App = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalImage, setModalImage] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalImage, setModalImage] = useState<string>("");
 
   useEffect(() => {
     searchQuery && imageSearch();
   }, [searchQuery, page]);
 
-  const handleSearch = (newSearchQuery) => {
+  const handleSearch = (newSearchQuery: string) => {
     if (newSearchQuery !== searchQuery) {
       setSearchQuery(newSearchQuery);
       setPage(1);
@@ -32,18 +38,8 @@ export const App = () => {
   const handlerLoadMore = () => {
     setPage(page + 1);
   };
-  const handleImageClick = (image) => {
+  const handleImageClick = (image: string) => {
     setModalImage(image);
-    toggleModal();
-  };
-
-  const toggleIsLoading = () => {
-    setIsLoading(!isLoading);
-  };
-  // const toggleIsError = () => {
-  //   setIsError(!isError);
-  // };
-  const toggleModal = () => {
     setShowModal(!showModal);
   };
 
@@ -76,7 +72,9 @@ export const App = () => {
       {images.length > 0 && (
         <ImageGallery images={images} onImageClick={handleImageClick} />
       )}
-      {showModal && <Modal largeImg={modalImage} onClose={toggleModal} />}
+      {showModal && (
+        <Modal largeImg={modalImage} onClose={() => setShowModal(!showModal)} />
+      )}
       {isLoading && <Loader />}
       {images.length > 0 && images.length / page === IMG_PER_PAGE && (
         <Button onButtonClick={handlerLoadMore} />
